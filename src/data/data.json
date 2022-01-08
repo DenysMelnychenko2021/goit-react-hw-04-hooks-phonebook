@@ -1,0 +1,28 @@
+{
+  "contacts": [
+    {
+      "id": "id-1",
+      "inputName": "Rosie Simpson",
+      "inputNumber": "459-12-56",
+      "agreed": true
+    },
+    {
+      "id": "id-2",
+      "inputName": "Hermione Kline",
+      "inputNumber": "443-89-12",
+      "agreed": true
+    },
+    {
+      "id": "id-3",
+      "inputName": "Eden Clements",
+      "inputNumber": "645-17-79",
+      "agreed": true
+    },
+    {
+      "id": "id-4",
+      "inputName": "Annie Copeland",
+      "inputNumber": "227-91-26",
+      "agreed": true
+    }
+  ]
+}

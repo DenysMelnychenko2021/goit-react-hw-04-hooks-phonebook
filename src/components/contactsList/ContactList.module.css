@@ -1,0 +1,31 @@
+.List {
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.Item {
+  box-shadow: 10px 0 10px -10px #000 inset, -10px 0 10px -10px #000 inset;
+  border-bottom: 1px solid rgb(116, 116, 116);
+  border-radius: 5px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.Item button {
+  background-color: #fff;
+  cursor: pointer;
+  border-style: none;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 0px 0px;
+  transition: all 0.15s;
+}
+
+.Item button:hover {
+  transform: scale(1.125);
+}
+
+.Item button:active {
+  transform: scale(1.025);
+}
