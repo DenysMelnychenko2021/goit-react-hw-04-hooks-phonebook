@@ -1,64 +1,69 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import s from './ContactForm.module.css';
 
 import { ContactInputs } from 'components/contactInputs';
 
-export class ContactForm extends Component {
-  static propTypes = { onSubmitContact: PropTypes.func.isRequired };
+export const ContactForm = ({ onSubmitContact }) => {
+  const [inputName, setInputName] = useState('');
+  const [inputNumber, setInputNumber] = useState('');
+  const [agreed, setAgreed] = useState(false);
 
-  state = {
-    inputName: '',
-    inputNumber: '',
-    agreed: false,
+  const handleChange = e => {
+    const { name, value, checked } = e.currentTarget;
+    switch (name) {
+      case 'inputName':
+        setInputName(value);
+        break;
+      case 'inputNumber':
+        setInputNumber(value);
+        break;
+      case 'agreed':
+        setAgreed(checked);
+        break;
+      default:
+        return;
+    }
   };
 
-  handleChange = e => {
-    const { value, name, type, checked } = e.currentTarget;
-    this.setState({ [name]: type === 'checkbox' ? checked : value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmitContact({ id: nanoid(), ...this.state });
-    this.resetForm();
+    onSubmitContact({ id: nanoid(), inputName, inputNumber, agreed });
+    resetForm();
   };
 
-  resetForm = () =>
-    this.setState({
-      inputName: '',
-      inputNumber: '',
-      agreed: false,
-    });
+  const resetForm = () => {
+    setInputName('');
+    setInputNumber('');
+    setAgreed(false);
+  };
 
-  render() {
-    const { handleSubmit, handleChange } = this;
+  return (
+    <form className={s.Box} onSubmit={handleSubmit}>
+      <ContactInputs
+        inputName={inputName}
+        inputNumber={inputNumber}
+        handleChange={handleChange}
+      />
 
-    const { inputName, inputNumber, agreed } = this.state;
-
-    return (
-      <form className={s.Box} onSubmit={handleSubmit}>
-        <ContactInputs
-          inputName={inputName}
-          inputNumber={inputNumber}
-          handleChange={handleChange}
+      <label>
+        I agree to the processing of data
+        <input
+          type="checkbox"
+          name="agreed"
+          checked={agreed}
+          onChange={handleChange}
         />
+      </label>
 
-        <label>
-          I agree to the processing of data
-          <input
-            type="checkbox"
-            name="agreed"
-            checked={agreed}
-            onChange={handleChange}
-          />
-        </label>
+      <button type="submit" disabled={!agreed}>
+        Add contact
+      </button>
+    </form>
+  );
+};
 
-        <button type="submit" disabled={!agreed}>
-          Add contact
-        </button>
-      </form>
-    );
-  }
-}
+ContactForm.propTypes = {
+  onSubmitContact: PropTypes.func.isRequired,
+};
